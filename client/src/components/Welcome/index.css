@@ -1,0 +1,34 @@
+.root {
+  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  height: 100vh;
+  width: 100%;
+  color: #eee;
+}
+
+.title {
+  font-family: 'Comfortaa', cursive !important;
+  color: #eee !important;
+  font-size: 4em !important;
+  margin-top: -150px !important;
+}
+
+.title .sub {
+  color: #eee !important;
+  font-size: 1.5rem !important;
+}
+
+.actions {
+  margin-top: 50px !important;
+}
+
+.ui.actions .button {
+  background: transparent;
+  border: solid 1px #eee !important;
+  color: #eee;
+}
+
+.ui.actions .button:hover,
+.ui.actions .button:active {
+  border: solid 1px #ccc !important;
+  color: #ccc;
+}

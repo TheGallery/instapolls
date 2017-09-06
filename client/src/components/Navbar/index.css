@@ -1,0 +1,22 @@
+.Navbar {
+  border-radius: 0 !important;
+}
+
+.Navbar-title {
+  font-family: 'Comfortaa', cursive !important;
+}
+
+.Navbar-mobile-menu {
+  display: none !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .Navbar > .menu,
+  .Navbar > .item:not(.header) {
+    display: none !important;
+  }
+
+  .Navbar .menu.Navbar-mobile-menu {
+    display: flex !important;
+  }
+}

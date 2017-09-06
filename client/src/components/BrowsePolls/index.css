@@ -1,0 +1,40 @@
+.BrowsePolls-poll-item {
+  width: 100% !important;
+  //margin: 0 !important;
+}
+
+.BrowsePolls-menu {
+  font-size: 20px;
+  margin-top: 40px;
+}
+
+
+.BrowsePolls-menu .hasBtn {
+  display: flex;
+  align-items: center;
+}
+
+.BrowsePolls-menu .hasBtn .button{
+  margin-left: auto;
+}
+
+.BrowsePolls-list .item {
+  display: flex !important;
+  align-items: center;
+  font-size: 1.1em;
+}
+
+.BrowsePolls-list .item div:last-child {
+  margin-left: auto;
+  display: none;
+}
+
+@media only screen and (max-width: 991px) {
+  .BrowsePolls-poll-item {
+    display: none;
+  }
+
+  .BrowsePolls-list .item div:last-child {
+    display: inline-block;
+  }
+}

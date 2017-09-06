@@ -1,0 +1,23 @@
+.Poll-root {
+  margin-top: 10px !important;
+  box-shadow: 0 7px 15px #ccc !important;
+}
+
+.Poll-vote-result {
+  margin: 10px 0;
+}
+
+@media only screen and (min-width: 992px) {
+  .Poll-root.Poll-fullscreen {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+  }
+
+  .Poll-root.Poll-fullscreen div:first-child {
+    flex-basis: 100% !important;
+  }
+
+  .Poll-root.Poll-fullscreen > * {
+    flex-basis: 50% !important;
+  }
+}
