@@ -4,10 +4,11 @@ const passport = require('passport');
 twitter.get('/', passport.authenticate('twitter'));
 
 twitter.get('/callback',
-  passport.authenticate('twitter'),
-  function (req, res) {
-    res.json(req.user);
-  }
+  passport.authenticate('twitter',
+    {
+      successRedirect: '/browse',
+      failureRedirect: '/signin'
+    })
 );
 
 module.exports = twitter;
