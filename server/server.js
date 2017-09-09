@@ -30,7 +30,7 @@ const sessConfig = {
 app.use(session(sessConfig));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static('../client/build'));
+app.use(express.static('../client/build', { index: false }));
 
 app.use('/', require('./routes'));
 
