@@ -1,0 +1,29 @@
+.Signin-root {
+  min-height: 100vh;
+  margin-top: -70px;
+  padding-top: 70px;
+}
+
+.Signin-content {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 0 7px 15px #ccc;
+  border-radius: 3px;
+  margin-top: -100px;
+}
+
+.Signin-content > .button {
+  margin: 5px 0;
+}
+
+
+@media only screen and (max-width: 767px) {
+  .Signin-content {
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+    margin-top: 0;
+  }
+}
