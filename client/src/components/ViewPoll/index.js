@@ -1,17 +1,34 @@
-import React from 'react';
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Poll from '../Poll';
-
 import { Container } from 'semantic-ui-react';
-
 import './index.css';
 
-function ViewPoll () {
-  return (
-    <Container className='ViewPoll-root'>
-      <Poll isFullScreen />
-    </Container>
-  );
+class ViewPoll extends Component {
+  render () {
+    const {
+      match,
+      polls
+    } = this.props;
+
+    return (
+      <Container className='ViewPoll-root'>
+        {
+          Object.keys(polls).length &&
+          <Poll
+            poll={polls[match.params.id]}
+            isFullScreen
+          />
+        }
+      </Container>
+    );
+  }
 }
 
-export default ViewPoll;
+function mapStateToProps (state) {
+  return {
+    polls: state.polls
+  };
+}
+
+export default connect(mapStateToProps)(ViewPoll);

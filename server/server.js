@@ -5,13 +5,15 @@ const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 mongoose.connect(process.env.DB);
 
 require('./models/User');
-
+require('./models/Poll');
+require('./models/Vote');
 require('./config/passport');
 
 const sessConfig = {
@@ -27,6 +29,7 @@ const sessConfig = {
   })
 };
 
+app.use(bodyParser.json());
 app.use(session(sessConfig));
 app.use(passport.initialize());
 app.use(passport.session());

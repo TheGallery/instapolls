@@ -27,10 +27,14 @@ const routes = (
                   ? <CreatePoll {...props} />
                   : <Redirect to='/signin' />
               )} />
-              <Route path='/polls/:id' component={ViewPoll} />
+              <Route path='/polls/:id' render={(props) => (
+                <ViewPoll {...props} />
+              )} />
               <Route path='/signin' component={Signin} />
               <Route path='/me' render={(props) => (
-                <BrowsePolls {...props} isUser />
+                isAuthenticated()
+                  ? <BrowsePolls {...props} isUser />
+                  : <Redirect to='/signin' />
               )} />
             </div>
           )} />

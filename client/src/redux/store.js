@@ -1,11 +1,21 @@
-import { createStore } from 'redux';
-
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import { isAuthenticated } from '../utils/auth';
-
 import reducer from './reducer';
+import { fetchData } from './initActions';
+
+import user from '../data/user';
 
 const defaultState = {
-  user: isAuthenticated() ? {} : null
+  user: isAuthenticated() ? user : null,
+  polls: [],
+  votes: []
 };
 
-export default createStore(reducer, defaultState);
+const store = createStore(reducer, defaultState,
+  applyMiddleware(thunk)
+);
+
+store.dispatch(fetchData());
+
+export default store;

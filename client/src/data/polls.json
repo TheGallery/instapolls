@@ -1,0 +1,29 @@
+{
+  "polls": {
+    "1": {
+    "id": 1,
+    "createdBy": 414,
+    "createdAt": "Sept 6 2017",
+    "name": "Favourite Programming Language",
+    "options": [{
+      "name": "Python",
+      "votes": 1
+    }, {
+      "name": "JavaScript",
+      "votes": 2
+    }]
+  },
+  "2" : {
+    "id": 2,
+    "createdBy": 412,
+    "createdAt": "Sept 6 2017",
+    "name": "Best Country",
+    "options": [{
+      "name": "Greece",
+      "votes": 1
+    }, {
+      "name": "Spain",
+      "votes": 2
+    }]
+  }}
+}

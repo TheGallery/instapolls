@@ -12,7 +12,8 @@ exports.login = function (profile, cb) {
       $setOnInsert: {
         name: profile.displayName,
         provider: profile.provider,
-        providerId: profile.id
+        providerId: profile.id,
+        polls: []
       }
     },
     {

@@ -1,19 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { List, Button } from 'semantic-ui-react';
-import _times from 'lodash/times';
+import _map from 'lodash/map';
 
-function PollList () {
+function PollList (props) {
+  const {
+    polls,
+    handlePollSelect
+  } = props;
+
   return (
     <List className='BrowsePolls-list' divided selection>
-    { _times(40, () => (
-      <List.Item>
-        <List.Header>Favourite Programming Language</List.Header>
-        <List.Content>
-          <Button as={Link} to='/' icon='arrow right' circular basic />
-        </List.Content>
-      </List.Item>
-      ))
+    {
+      Object.keys(polls).length
+    ? (
+        _map(polls, (poll, id) => (
+          <List.Item key={id} id={id} onClick={handlePollSelect}>
+            <List.Header>{poll.name}</List.Header>
+            <List.Content>
+              <Button as={Link} to={`/polls/${id}`} icon='arrow right' circular basic />
+            </List.Content>
+          </List.Item>
+        ))
+      )
+    : (
+        <div>Nothing to show here</div>
+      )
     }
     </List>
   );
