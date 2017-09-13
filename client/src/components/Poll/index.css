@@ -1,10 +1,21 @@
 .Poll-root {
   margin-top: 10px !important;
   box-shadow: 0 7px 15px #ccc !important;
+  flex-direction: row !important;
+  flex-wrap: wrap;
 }
 
 .Poll-vote-result {
   margin: 10px 0;
+}
+
+.Poll-header {
+  flex-basis: auto !important;
+}
+
+.Poll-share {
+  flex-basis: 0 !important;
+  flex-grow: 0 !important;
 }
 
 @media only screen and (min-width: 992px) {
@@ -13,11 +24,17 @@
     flex-wrap: wrap;
   }
 
-  .Poll-root.Poll-fullscreen div:first-child {
-    flex-basis: 100% !important;
-  }
-
-  .Poll-root.Poll-fullscreen > * {
+  .Poll-root.Poll-fullscreen > .content {
     flex-basis: 50% !important;
   }
+
+  .Poll-root.Poll-fullscreen > .Poll-header {
+    flex-basis: auto !important;
+  }
+
+  .Poll-root.Poll-fullscreen > .Poll-share {
+    flex-basis: 0 !important;
+    flex-grow: 0 !important;
+  }
+
 }

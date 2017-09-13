@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Card, Dropdown, Icon } from 'semantic-ui-react';
-import PollResults from './PollResults';
-import PollActions from './PollActions';
 import { connect } from 'react-redux';
 import { addVote, removeVote } from '../../redux/votes';
+import PollResults from './PollResults';
+import PollActions from './PollActions';
+import PollShare from './PollShare';
 import './index.css';
 
 class Poll extends Component {
@@ -99,7 +100,7 @@ class Poll extends Component {
         className={isFullScreen ? 'Poll-root Poll-fullscreen' : 'Poll-root'}
         fluid
       >
-        <Card.Content>
+        <Card.Content className='Poll-header'>
           <Card.Header as={Link} to={`/polls/${poll._id}`}>
             {poll.name}
           </Card.Header>
@@ -107,6 +108,7 @@ class Poll extends Component {
             {`${poll.createdBy.name}, ${poll.createdAt}`}
           </Card.Meta>
         </Card.Content>
+        { this.props.user && <PollShare poll={poll} />}
         <PollResults data={this.state.options} />
         <Card.Content>
           <Card.Description>
