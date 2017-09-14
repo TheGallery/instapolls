@@ -1,7 +1,11 @@
 {
   "name": "voting-app",
   "version": "1.0.0",
-  "description": "FCC's Voting App project.",
+  "description": "Instantly create and share polls.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheGallery/instapolls"
+  },
   "engines": {
     "node": "8.x.x"
   },
