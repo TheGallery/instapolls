@@ -21,24 +21,26 @@ const routes = (
           <Route path='/' render={(props) => (
             <div className='Main-root'>
               <Navbar {...props} />
-              <Route path='/browse' component={BrowsePolls} />
-              <Route path='/new' render={(props) => (
-                isAuthenticated()
-                  ? <CreatePoll {...props} />
-                  : <Redirect to='/signin' />
-              )} />
-              <Route path='/polls/:id' render={(props) => (
-                <ViewPoll {...props} />
-              )} />
-              <Route path='/signin' component={Signin} />
-              <Route path='/me' render={(props) => (
-                isAuthenticated()
-                  ? <BrowsePolls {...props} isUser />
-                  : <Redirect to='/signin' />
-              )} />
-              <Route path='*' render={() => (
-                <div>There is nothing here.</div>
+              <Switch>
+                <Route path='/browse' component={BrowsePolls} />
+                <Route path='/new' render={(props) => (
+                  isAuthenticated()
+                    ? <CreatePoll {...props} />
+                    : <Redirect to='/signin' />
                 )} />
+                <Route path='/polls/:id' render={(props) => (
+                  <ViewPoll {...props} />
+                )} />
+                <Route path='/signin' component={Signin} />
+                <Route path='/me' render={(props) => (
+                  isAuthenticated()
+                    ? <BrowsePolls {...props} isUser />
+                    : <Redirect to='/signin' />
+                )} />
+                <Route path='*' render={() => (
+                  <div>There is nothing here.</div>
+                  )} />
+              </Switch>
             </div>
           )} />
         </Switch>
