@@ -14,7 +14,7 @@ export default function reducer (user = null, action) {
     case ADD_POLL:
       return {
         ...user,
-        polls: [...user.polls, action.poll._id]
+        polls: [action.poll._id, ...user.polls]
       };
     case REMOVE_POLL:
       return {

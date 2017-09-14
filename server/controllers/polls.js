@@ -17,7 +17,10 @@ exports.addPoll = function (data, user, cb) {
 
       User.update({ _id: user.id }, {
         $push: {
-          polls: poll.id
+          polls: {
+            $each: [poll.id],
+            $position: 0
+          }
         }
       }, function (err, user) {
         if (err) return cb(err);
