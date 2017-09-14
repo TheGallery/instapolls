@@ -36,6 +36,9 @@ const routes = (
                   ? <BrowsePolls {...props} isUser />
                   : <Redirect to='/signin' />
               )} />
+              <Route path='*' render={() => (
+                <div>There is nothing here.</div>
+                )} />
             </div>
           )} />
         </Switch>
