@@ -20,8 +20,8 @@ export default function reducer (user = null, action) {
       return {
         ...user,
         polls: [
-          ...user.polls.indexOf(action.pollId),
-          ...user.polls.indexOf(action.pollId + 1)
+          ...user.polls.slice(0, user.polls.indexOf(action.pollId)),
+          ...user.polls.slice(user.polls.indexOf(action.pollId + 1))
         ]
       };
     default:
