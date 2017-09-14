@@ -11,7 +11,7 @@ routes.get('/*', (req, res) => {
     res.cookie('uid', req.user.id);
   }
 
-  res.sendFile(path.resolve('../client/build/index.html'));
+  res.sendFile(path.resolve(__dirname, '../../client/build/index.html'));
 });
 
 module.exports = routes;

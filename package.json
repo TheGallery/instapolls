@@ -2,11 +2,12 @@
   "name": "voting-app",
   "version": "1.0.0",
   "description": "FCC's Voting App project.",
-  "main": "server/server.js",
+  "engines": {
+    "node": "8.x.x"
+  },
   "scripts": {
-    "start": "cd server && npm start",
-    "postinstall": " cd server/ && npm install",
-    "heroku-postbuild:": "cd client/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "start": "cd server && node server.js",
+    "postinstall": " cd server && npm install && cd ../client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "cacheDirectories": ["client/node_modules", "server/node_modules"],
