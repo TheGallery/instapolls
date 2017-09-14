@@ -21,7 +21,7 @@ const sessConfig = {
   cookie: {
     maxAge: 2592000000 // 30 days
   },
-  secret: 'fcc va',
+  secret: process.env.SESS_SECRET,
   resave: false,
   saveUninitialized: false,
   store: new MongoStore({
@@ -38,5 +38,5 @@ app.use(express.static('../client/build', { index: false }));
 app.use('/', require('./routes'));
 
 app.listen(process.env.PORT || 3001, () => {
-  console.log('Sever running');
+  console.log('Server is running.');
 });

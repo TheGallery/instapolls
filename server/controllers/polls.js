@@ -13,17 +13,20 @@ exports.addPoll = function (data, user, cb) {
     });
 
     poll.save((err, poll) => {
-      if (err) console.log(err);
-      User.update(
-        {_id: user.id},
-        {$push: {polls: poll.id}},
-        function (err, user) {
-          cb(err, poll);
+      if (err) return cb(err);
+
+      User.update({ _id: user.id }, {
+        $push: {
+          polls: poll.id
         }
-      );
+      }, function (err, user) {
+        if (err) return cb(err);
+
+        return cb(null, poll);
+      });
     });
   } else {
-    cb({error: 'Validation error.'});
+    return cb({error: 'Validation error.'});
   }
 };
 
@@ -36,15 +39,17 @@ exports.getAll = function (cb) {
 exports.delete = function (pollId, user, cb) {
   Poll.findOneAndRemove({_id: pollId, createdBy: user._id})
     .exec(function (err, poll) {
-      Vote.remove({pollID: pollId})
+      if (err) return cb(err);
+
+      Vote.remove({pollId: pollId})
         .exec(function (err) {
+          if (err) return cb(err);
+
           User.update({_id: user._id}, {
             $pull: {
               polls: pollId
             }
-          }).exec(function (err) {
-            cb(err);
-          });
+          }).exec(cb);
         });
     });
 };

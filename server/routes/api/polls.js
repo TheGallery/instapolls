@@ -1,44 +1,44 @@
 const polls = require('express').Router();
 const pollsCtrl = require('../../controllers/polls');
 
+polls.get('/', (req, res) => {
+  pollsCtrl.getAll(function (err, polls) {
+    if (err) {
+      res.status(500).json(err);
+      return;
+    }
+
+    res.json(polls);
+  });
+});
+
 polls.post('/', (req, res) => {
   if (req.isAuthenticated()) {
     pollsCtrl.addPoll(req.body, req.user, function (err, poll) {
       if (err) {
-        console.log(err);
         res.status(500).json(err);
-      } else {
-        res.json(poll);
+        return;
       }
+
+      res.json(poll);
     });
   } else {
-    res.json({error: 'User is not authenticated'});
+    res.status(401).json({error: 'User is not authenticated.'});
   }
-});
-
-polls.get('/', (req, res) => {
-  pollsCtrl.getAll(function (err, polls) {
-    if (err) {
-      console.log(err);
-      res.status(500).json(err);
-    } else {
-      res.json(polls);
-    }
-  });
 });
 
 polls.delete('/:pollId', (req, res) => {
   if (req.isAuthenticated()) {
-    pollsCtrl.delete(req.params.pollId, req.user, function (err, success) {
+    pollsCtrl.delete(req.params.pollId, req.user, function (err) {
       if (err) {
-        console.log(err);
-        res.status(500).json(err);
-      } else {
-        res.json('ok');
+        res.status(500).json({'error': 'Database error.'});
+        return;
       }
+
+      res.json('success');
     });
   } else {
-    res.json({error: 'Server error.'});
+    res.status(401).json({error: 'User is not authenticated.'});
   }
 });
 

@@ -13,7 +13,7 @@ passport.use(new GitHubStrategy({
   users.login(profile, function (err, user) {
     if (err) return done(err);
 
-    done(null, user);
+    return done(null, user);
   });
 }));
 
@@ -26,7 +26,7 @@ passport.use(new TwitterStrategy({
   users.login(profile, function (err, user) {
     if (err) return done(err);
 
-    done(null, user);
+    return done(null, user);
   });
 }));
 
@@ -39,7 +39,7 @@ passport.use(new GoogleStrategy({
   users.login(profile, function (err, user) {
     if (err) return done(err);
 
-    done(null, user);
+    return done(null, user);
   });
 }));
 
