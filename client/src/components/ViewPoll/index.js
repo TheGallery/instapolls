@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Poll from '../Poll';
 import { Container } from 'semantic-ui-react';
+import Poll from '../Poll';
 import './index.css';
 
 class ViewPoll extends Component {
@@ -13,12 +13,8 @@ class ViewPoll extends Component {
 
     return (
       <Container className='ViewPoll-root'>
-        {
-          Object.keys(polls).length &&
-          <Poll
-            poll={polls[match.params.id]}
-            isFullScreen
-          />
+        { Object.keys(polls).length &&
+          <Poll poll={polls[match.params.id]} isFullScreen />
         }
       </Container>
     );

@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Menu, Dropdown } from 'semantic-ui-react';
-import MobileNavbar from './MobileNavbar';
 
+import MobileNavbar from './MobileNavbar';
 import './index.css';
 
 class Navbar extends Component {
   render () {
     return (
       <Menu size='huge' color='teal' className='Navbar' borderless>
-        <Menu.Item className='Navbar-title' header>Instapolls</Menu.Item>
+        <Menu.Item as={Link} to='/' className='Navbar-title' header>
+          Instapolls
+        </Menu.Item>
 
         { /* Desktop Menu */ }
         <Menu.Item
@@ -30,14 +32,16 @@ class Navbar extends Component {
           Create Poll
         </Menu.Item>
         {
-          !!this.props.user
+          this.props.user
         ? (
             <Menu.Menu position='right'>
-              <Dropdown text={`Hello ${this.props.user.name}`} item>
+              <Dropdown text={`Hello, ${this.props.user.name}`} item>
                 <Dropdown.Menu>
                   <Dropdown.Item as={Link} to='/me'>My Polls</Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item as='a' href='/auth/logout'>Log out</Dropdown.Item>
+                  <Dropdown.Item as='a' href='/auth/logout'>
+                    Log out
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Menu.Menu>
@@ -49,7 +53,7 @@ class Navbar extends Component {
           )
         }
 
-        { /* Small device Menu */ }
+        { /* Tablet/Mobile Menu */ }
         <MobileNavbar loggedIn={!!this.props.user} />
       </Menu>
     );

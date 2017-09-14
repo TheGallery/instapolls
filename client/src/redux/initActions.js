@@ -21,7 +21,7 @@ function fetchVotes () {
     credentials: 'include'
   })
   .then(res => res.json())
-  .then(votes => votes.map(vote => vote.pollID));
+  .then(votes => votes.map(vote => vote.pollId));
 }
 
 export function fetchData () {

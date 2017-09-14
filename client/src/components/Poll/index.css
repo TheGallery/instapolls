@@ -9,13 +9,26 @@
   margin: 10px 0;
 }
 
-.Poll-header {
+.Poll-root > .content {
+  flex-basis: 100% !important;
+}
+
+.Poll-root > .Poll-header {
   flex-basis: auto !important;
 }
 
-.Poll-share {
+.Poll-root > .Poll-share {
   flex-basis: 0 !important;
   flex-grow: 0 !important;
+}
+
+.Poll-root > .Poll-actions {
+  display: flex;
+  align-items: flex-end;
+}
+
+.Poll-root > .Poll-actions > .button:last-child {
+  margin-left: auto !important;
 }
 
 @media only screen and (min-width: 992px) {

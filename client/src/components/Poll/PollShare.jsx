@@ -2,7 +2,9 @@ import React from 'react';
 import { Card, Button, Icon } from 'semantic-ui-react';
 
 function getTwitterUrl (poll) {
-  return encodeURI(`https://twitter.com/intent/tweet?text=${poll.name} | Instapolls&url=https://instapolls.herokuapp.com/polls/${poll._id}`);
+  return encodeURI(`https://twitter.com/intent/tweet
+    ?text=${poll.name} | Instapolls
+    &url=https://instapolls.herokuapp.com/polls/${poll._id}`);
 }
 
 function PollShare ({poll}) {

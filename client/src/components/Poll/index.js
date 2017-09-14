@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Card, Dropdown, Icon } from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { addVote, removeVote } from '../../redux/votes';
+import { deletePoll } from '../../redux/polls';
+
 import PollResults from './PollResults';
 import PollActions from './PollActions';
 import PollShare from './PollShare';
+import PollOptions from './PollOptions';
 import './index.css';
 
 class Poll extends Component {
@@ -30,7 +33,7 @@ class Poll extends Component {
       options: [
         ...this.state.options,
         {
-          _id: `temp-${value}`,
+          _id: `temp-${value}`, // need an ID for the chart
           name: value
         }
       ]
@@ -44,7 +47,9 @@ class Poll extends Component {
   };
 
   handleAddVote = () => {
-    this.props.addVote(this.props.poll._id, this.state.currentValue);
+    if (this.state.currentValue) {
+      this.props.addVote(this.props.poll._id, this.state.currentValue);
+    }
   };
 
   handleRemoveVote = () => {
@@ -57,9 +62,17 @@ class Poll extends Component {
       credentials: 'include'
     })
     .then(res => res.json())
-    .then(data =>
-      this.props.history.push('/browse')
-    );
+    .then(data => {
+      if (this.props.location.pathname !== '/browse') {
+        this.props.history.push('/browse');
+      }
+      
+      this.props.deletePoll(this.props.poll._id);
+      
+      this.setState({
+        modal: false
+      });
+    });
   };
 
   toggleModal = (open) => {
@@ -83,58 +96,39 @@ class Poll extends Component {
   };
 
   ownsPoll = () => {
-    if (this.props.user) {
-      return ~this.props.user.polls.indexOf(this.props.poll._id);
-    }
-
-    return false;
+    return this.props.user
+      ? !!~this.props.user.polls.indexOf(this.props.poll._id)
+      : false;
   };
 
   render () {
-    const {
-      isFullScreen,
-      poll
-    } = this.props;
     return (
       <Card
-        className={isFullScreen ? 'Poll-root Poll-fullscreen' : 'Poll-root'}
+        className={
+          this.props.isFullScreen 
+            ? 'Poll-root Poll-fullscreen' 
+            : 'Poll-root'
+        }
         fluid
       >
         <Card.Content className='Poll-header'>
-          <Card.Header as={Link} to={`/polls/${poll._id}`}>
-            {poll.name}
+          <Card.Header as={Link} to={`/polls/${this.props.poll._id}`}>
+            {this.props.poll.name}
           </Card.Header>
           <Card.Meta>
-            {`${poll.createdBy.name}, ${poll.createdAt}`}
+            {`${this.props.poll.createdBy.name}, ${this.props.poll.createdAt}`}
           </Card.Meta>
         </Card.Content>
-        { this.props.user && <PollShare poll={poll} />}
+        { this.props.user && <PollShare poll={this.props.poll} />}
         <PollResults data={this.state.options} />
-        <Card.Content>
-          <Card.Description>
-            You can select one of the available options or type your own.
-          </Card.Description>
-          <Dropdown
-            options={this.getPollOptions(this.state.options)}
-            placeholder='Cast your vote'
-            additionLabel='Add option: '
-            value={this.state.currentValue}
-            onAddItem={this.handleAddOption}
-            onChange={this.handleOptionChange}
-            disabled={this.hasVoted()}
-            allowAdditions={!!this.props.user}
-            search
-            selection
-            fluid
-          />
-          { this.hasVoted() &&
-            (
-              <div className='Poll-vote-result'>
-                <Icon name='checkmark' /> You've voted in this poll.
-              </div>
-            )
-          }
-        </Card.Content>
+        <PollOptions
+          isRegistered={!!this.props.user}
+          options={this.getPollOptions(this.state.options)}
+          value={this.state.currentValue}
+          hasVoted={this.hasVoted()}
+          handleAddOption={this.handleAddOption}
+          handleOptionChange={this.handleOptionChange}
+        />
         <PollActions
           ownsPoll={this.ownsPoll()}
           hasVoted={this.hasVoted()}
@@ -159,7 +153,8 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     addVote: (pollId, option) => dispatch(addVote(pollId, option)),
-    removeVote: (pollId) => dispatch(removeVote(pollId))
+    removeVote: (pollId) => dispatch(removeVote(pollId)),
+    deletePoll: (pollId) => dispatch(deletePoll(pollId))
   };
 }
 

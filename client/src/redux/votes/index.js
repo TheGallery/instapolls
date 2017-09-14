@@ -16,7 +16,7 @@ export function receiveVote (pollId, action) {
   };
 }
 
-export function addVote (poll, option) {
+export function addVote (pollId, option) {
   return function (dispatch) {
     fetch('/api/votes', {
       method: 'POST',
@@ -25,7 +25,7 @@ export function addVote (poll, option) {
       },
       credentials: 'include',
       body: JSON.stringify({
-        poll,
+        pollId,
         option
       })
     })
@@ -38,7 +38,7 @@ export function addVote (poll, option) {
     })
     .then(data => {
       dispatch(receivePoll(data));
-      dispatch(receiveVote(poll, 'add'));
+      dispatch(receiveVote(pollId, 'add'));
     })
     .catch(err => {
       console.log('Server error.');

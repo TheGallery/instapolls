@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Header, Divider, Form, Message } from 'semantic-ui-react';
-import * as validator from '../../utils/validator';
+import { validateName, validateOptions, validatePoll } from '../../utils/polls';
 import { connect } from 'react-redux';
 import { addPoll } from '../../redux/polls';
 
+
+/* Todo: This container has great potential for improvement. */
 class CreatePoll extends Component {
   state = {
     status: 'loaded',
@@ -20,7 +22,7 @@ class CreatePoll extends Component {
   };
 
   handleNameChange = (e) => {
-    const validStatus = validator.validateName(e.target.value);
+    const validStatus = validateName(e.target.value);
 
     if (validStatus.valid) {
       this.setState({
@@ -46,7 +48,7 @@ class CreatePoll extends Component {
   };
 
   handleOptionsChange = (e) => {
-    const validStatus = validator.validateOptions(e.target.value);
+    const validStatus = validateOptions(e.target.value);
 
     if (validStatus.valid) {
       this.setState({
@@ -72,7 +74,7 @@ class CreatePoll extends Component {
   };
 
   handlePollSubmit = () => {
-    const validStatus = validator.validatePoll(this.state.poll.name, this.state.poll.options);
+    const validStatus = validatePoll(this.state.poll.name, this.state.poll.options);
 
     if (validStatus.valid) {
       fetch('/api/polls', {
@@ -91,19 +93,8 @@ class CreatePoll extends Component {
         }
       })
       .then(data => {
-        this.props.addPoll(data);
-        this.setState({
-          status: 'loaded',
-          poll: {
-            name: '',
-            options: []
-          },
-          message: {
-            type: 'success',
-            context: '',
-            id: data._id
-          }
-        })
+        this.props.addPoll(data, this.props.user);
+        this.props.history.push(`/polls/${data._id}`)
       })
       .catch(err => {
         this.setState({
@@ -134,29 +125,14 @@ class CreatePoll extends Component {
       <Container>
         <Header as='h2'>Create Poll</Header>
         <Divider />
-        <Form
-          error={this.state.message.type === 'error'}
-          success={this.state.message.type === 'success'}
-        >
-
-          <Message floating success>
-            <Message.Header>Poll submitted!</Message.Header>
-            <Message.Content>
-              <Link to={`/polls/${this.state.message.id}`}>Click here</Link> to view or share it.
-            </Message.Content>
-          </Message>
+        <Form error={this.state.message.type === 'error'}>
           <Message floating error>
             {
               (typeof this.state.message.text === 'string')
-            ? (
-                <Message.Content>{this.state.message.text}</Message.Content>
-              )
-            : (
-                <Message.List items={this.state.message.text} />
-              )
+            ? <Message.Content>{this.state.message.text}</Message.Content>
+            : <Message.List items={this.state.message.text} />
             }
           </Message>
-
           <Form.Field>
             <label>Poll Title</label>
             <Form.Input
@@ -194,11 +170,16 @@ class CreatePoll extends Component {
   }
 }
 
-
-function mapDispatchToProps (dispatch) {
+function mapStateToProps (state) {
   return {
-    addPoll: (poll) => dispatch(addPoll(poll))
+    user: state.user
   }
 }
 
-export default connect(() => ({}), mapDispatchToProps)(CreatePoll);
+function mapDispatchToProps (dispatch) {
+  return {
+    addPoll: (poll, user) => dispatch(addPoll(poll, user))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePoll);

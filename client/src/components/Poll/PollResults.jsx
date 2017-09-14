@@ -25,7 +25,6 @@ function normalizeData (data) {
 }
 
 function PollResults ({data}) {
-  console.log(normalizeData(data));
   return (
     <Pie data={normalizeData(data)} />
   );

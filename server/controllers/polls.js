@@ -33,6 +33,7 @@ exports.addPoll = function (data, user, cb) {
 exports.getAll = function (cb) {
   Poll.find({})
     .populate({path: 'createdBy', select: 'name -_id'})
+    .sort({createdAt: -1})
     .exec(cb);
 };
 

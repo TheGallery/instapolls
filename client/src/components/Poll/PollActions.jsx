@@ -13,31 +13,27 @@ function PollActions (props) {
   } = props;
 
   return (
-    <Card.Content>
+    <Card.Content className='Poll-actions'>
       { ownsPoll &&
         <Button
           content='Delete Poll'
           icon='warning'
           color='red'
-          floated='left'
           onClick={toggleModal.bind(null, true)}
         />
       }
-      {
-        hasVoted
-      ? <Button
+      { hasVoted
+        ? <Button
           content='Remove Vote'
           color='blue'
-          floated='right'
           onClick={handleRemoveVote}
           basic
-        />
-      : <Button
+          />
+        : <Button
           content='Vote'
           color='blue'
-          floated='right'
           onClick={handleAddVote}
-        />
+          />
       }
       <Confirm
         open={modal}

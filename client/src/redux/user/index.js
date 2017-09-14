@@ -1,4 +1,4 @@
-import { RECEIVE_USER, ADD_POLL } from '../actionTypes';
+import { RECEIVE_USER, ADD_POLL, REMOVE_POLL } from '../actionTypes';
 
 export function receiveUser (user) {
   return {
@@ -15,6 +15,14 @@ export default function reducer (user = null, action) {
       return {
         ...user,
         polls: [...user.polls, action.poll._id]
+      };
+    case REMOVE_POLL:
+      return {
+        ...user,
+        polls: [
+          ...user.polls.indexOf(action.pollId),
+          ...user.polls.indexOf(action.pollId + 1)
+        ]
       };
     default:
       return user;

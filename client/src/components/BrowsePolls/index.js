@@ -1,19 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { pollArrToObj } from '../../utils/polls';
+import { getPolls } from '../../utils/polls';
 
 import BrowseMenu from './BrowseMenu';
 import PollList from './PollList';
 import PollItem from './PollItem';
-import './index.css';
 
 import { Container, Divider, Grid } from 'semantic-ui-react';
+import './index.css';
 
 class BrowsePolls extends Component {
   state = {
-    activePoll: ''
+    activePoll: null
   };
 
+  componentWillReceiveProps (nextProps) {
+
+    if (Object.keys(this.props.polls).length !== Object.keys(nextProps.polls).length) {
+      this.setState({
+        activePoll: Object.keys(nextProps.polls)[0] || ''
+      });
+    }
+  };
+
+  // https://react.semantic-ui.com/modules/sticky
   handleContextRef = (stickyContext) => {
     this.setState({ stickyContext });
   };
@@ -28,20 +38,6 @@ class BrowsePolls extends Component {
     return !!~this.props.votes.indexOf(this.state.activePoll);
   };
 
-  pollList = () => {
-    if (!Object.keys(this.props.polls).length) return [];
-
-    if (this.props.isUser) {
-      const userPolls = this.props.user.polls.map(poll => {
-        return this.props.polls[poll];
-      });
-
-      return pollArrToObj(userPolls);
-    }
-
-    return this.props.polls;
-  }
-
   render () {
     return (
       <Container>
@@ -51,7 +47,7 @@ class BrowsePolls extends Component {
           <Grid.Column>
             <div ref={this.handleContextRef}>
               <PollList
-                polls={this.pollList()}
+                polls={this.props.polls}
                 handlePollSelect={this.handlePollSelect}
               />
               {
@@ -59,7 +55,6 @@ class BrowsePolls extends Component {
                 <PollItem
                   stickyContext={this.state.stickyContext}
                   poll={this.props.polls[this.state.activePoll]}
-                  hasVoted={this.hasVoted()}
                 />
               }
             </div>
@@ -70,10 +65,10 @@ class BrowsePolls extends Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps (state, ownProps) {
   return {
     user: state.user,
-    polls: state.polls,
+    polls: getPolls(state.polls, ownProps.isUser, state.user),
     votes: state.votes
   };
 }

@@ -1,13 +1,5 @@
 import React from 'react';
-
-import {
-  Container,
-  Button,
-  Icon,
-  Header,
-  Divider
-} from 'semantic-ui-react';
-
+import { Container, Button, Icon, Header, Divider } from 'semantic-ui-react';
 import './index.css';
 
 function Signin () {
