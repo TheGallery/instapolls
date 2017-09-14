@@ -7,12 +7,9 @@ auth.use('/twitter', twitter);
 auth.use('/google', google);
 auth.use('/github', github);
 
-auth.get('/', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.json(req.user);
-  } else {
-    res.json({error: 'Unauthenticated.'});
-  }
+auth.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
 });
 
 module.exports = auth;

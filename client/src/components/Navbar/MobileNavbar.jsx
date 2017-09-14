@@ -16,7 +16,7 @@ function MobileNavbar ({loggedIn}) {
               <Dropdown.Divider />
               <Dropdown.Item as={Link} to='/me'>My Polls</Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item>Log out</Dropdown.Item>
+              <Dropdown.Item as='a' href='/auth/logout'>Log out</Dropdown.Item>
             </Dropdown.Menu>
           )
         : (
